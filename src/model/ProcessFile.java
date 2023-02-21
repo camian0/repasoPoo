@@ -4,15 +4,21 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class ProcessFile {
 
-    private HashMap<String, Integer> results = new HashMap<>();
+    private ArrayList<String> results = new ArrayList<>();
     Upload upload = new Upload();
 
-    public HashMap<String, Integer> getHashMap() {
-        return results;
+    public String getResults() {
+        String message = "";
+        for (String string : results) {
+            String[] split = string.split("-");
+            message += "Resultados: " + split[0] + ": " + split[1] + "\n";
+        }
+
+        return message;
     }
 
     public void processFile(String path, String word) throws IOException {
@@ -32,10 +38,10 @@ public class ProcessFile {
         int found = 0;
         String nameFile = file.getName();
         while (line != null) {
-            found += searchWords(line, word);
+            found += searchWords(nameFile, word);
             line = br.readLine();
         }
-        results.put(nameFile, found);
+        results.add(nameFile + "-" + found);
         fr.close();
     }
 
