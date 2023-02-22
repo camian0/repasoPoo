@@ -13,11 +13,13 @@ public class ProcessFile {
 
     public String getResults() {
         String message = "";
+        short total = 0;
         for (String string : results) {
             String[] split = string.split("-");
+            total += Integer.parseInt(split[1]);
             message += "Resultados: " + split[0] + ": " + split[1] + "\n";
         }
-
+        message += "\n Total: " + total;
         return message;
     }
 
@@ -35,10 +37,10 @@ public class ProcessFile {
         FileReader fr = new FileReader(file);
         BufferedReader br = new BufferedReader(fr);
         String line = br.readLine();
-        int found = 0;
+        short found = 0;
         String nameFile = file.getName();
         while (line != null) {
-            found += searchWords(nameFile, word);
+            found += searchWords(line, word);
             line = br.readLine();
         }
         results.add(nameFile + "-" + found);
@@ -46,16 +48,16 @@ public class ProcessFile {
     }
 
     public int searchWords(String line, String word) {
-        int found = 0;
+        short founded = 0;
         line = line.trim();
-        String[] split = line.split(" ");
-        for (String string : split) {
-            if (string.equals(word)) {
-                found++;
-            }
+        int index = 0;
+        int indexFounded = line.indexOf(word, index);
+        while (indexFounded != -1) {
+            index = indexFounded + word.length();
+            founded++;
+            indexFounded = line.indexOf(word, index);
         }
-
-        return found;
+        return founded;
     }
 
 }
