@@ -11,6 +11,8 @@ public class ProcessFile {
     private ArrayList<String> results = new ArrayList<>();
     Upload upload = new Upload();
 
+    // Method to process each file and get back a message to interface
+
     public String getResults() {
         String message = "";
         short total = 0;
@@ -23,6 +25,9 @@ public class ProcessFile {
         return message;
     }
 
+    // the method receive a path and word to search,
+    // then, send each file to other method to read the file
+
     public void processFile(String path, String word) throws IOException {
         upload.uploadFile(path);
         File file = upload.getFile();
@@ -32,6 +37,10 @@ public class ProcessFile {
             this.readFile(aFile, word);
         }
     }
+
+    // the method receives a file and word to search,
+    // it creates the structure to can be read the file, line to line
+    // then, send the a line to be examinated together the word searched
 
     public void readFile(File file, String word) throws IOException {
         FileReader fr = new FileReader(file);
@@ -47,6 +56,9 @@ public class ProcessFile {
         fr.close();
     }
 
+    // the method receives a line of text and the word
+    // and search if the word is into line and get back
+    // how many times was encountered
     public int searchWords(String line, String word) {
         short founded = 0;
         line = line.trim();
